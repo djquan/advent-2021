@@ -76,7 +76,7 @@ func TestWithLargerInput(t *testing.T) {
 	}
 
 	result = part2(input)
-	if result != 1696 {
+	if result != 1737 {
 		t.Fatalf("Expected 1696, got %v", result)
 	}
 }
