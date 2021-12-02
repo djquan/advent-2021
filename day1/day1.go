@@ -18,14 +18,24 @@ func part1(depths []int) int {
 }
 
 func part2(depths []int) int {
-	var slidingDepths []int
+	previous, result := 0, 0
 
 	for i, depth := range depths {
-		if i >= 2 {
-			val := depth + depths[i-1] + depths[i-2]
-			slidingDepths = append(slidingDepths, val)
+		if i < 2 {
+			continue
 		}
+
+		if i == 2 {
+			previous = depth + depths[i-1] + depths[i-2]
+			continue
+		}
+
+		val := depth + depths[i-1] + depths[i-2]
+		if val > previous {
+			result++
+		}
+		previous = val
 	}
 
-	return part1(slidingDepths)
+	return result
 }
