@@ -38,76 +38,57 @@ func part1(input []string) int64 {
 }
 
 func part2(input []string) int64 {
+	oxygen := part2Helper(input, func(a, b rune) bool {
+		return a == b
+	})
+
+	c02 := part2Helper(input, func(a, b rune) bool {
+		return a != b
+	})
+
+	return oxygen * c02
+}
+
+type filterFn func(a, b rune) bool
+
+func part2Helper(input []string, filter filterFn) int64 {
+	candidates := input
 	length := len(input[0])
 
-	candidatesForOxygen := input
-
 	for i := 0; i < length; i++ {
+		if len(candidates) == 1 {
+			break
+		}
+
 		byteCount := 0
-		for _, s := range candidatesForOxygen {
+		for _, s := range candidates {
 			if s[i] == '1' {
 				byteCount++
 			}
 		}
 
 		var mostCommon rune
-
-		if byteCount > len(candidatesForOxygen)/2 || byteCount == len(candidatesForOxygen)/2 && len(candidatesForOxygen)%2 == 0 {
+		if byteCount > len(candidates)/2 || byteCount == len(candidates)/2 && len(candidates)%2 == 0 {
 			mostCommon = '1'
 		} else {
 			mostCommon = '0'
 		}
 
-		newCandidatesForOxygen := make([]string, 0)
-		for _, s := range candidatesForOxygen {
-			if rune(s[i]) == mostCommon {
-				newCandidatesForOxygen = append(newCandidatesForOxygen, s)
+		newCandidates := make([]string, 0)
+		for _, s := range candidates {
+			if filter(rune(s[i]), mostCommon) {
+				newCandidates = append(newCandidates, s)
 			}
 		}
 
-		if len(candidatesForOxygen) == 1 {
-			break
-		}
-		candidatesForOxygen = newCandidatesForOxygen
+		candidates = newCandidates
 	}
 
-	candidatesForC02 := input
-	for i := 0; i < length; i++ {
-		byteCount := 0
-		for _, s := range candidatesForC02 {
-			if s[i] == '1' {
-				byteCount++
-			}
-		}
-
-		var mostCommon rune
-
-		if byteCount > len(candidatesForC02)/2 || byteCount == len(candidatesForC02)/2 && len(candidatesForC02)%2 == 0 {
-			mostCommon = '1'
-		} else {
-			mostCommon = '0'
-		}
-
-		newCandidatesForC02 := make([]string, 0)
-		for _, s := range candidatesForC02 {
-			if rune(s[i]) != mostCommon {
-				newCandidatesForC02 = append(newCandidatesForC02, s)
-			}
-		}
-
-		if len(candidatesForC02) == 1 {
-			break
-		}
-		candidatesForC02 = newCandidatesForC02
-	}
-
-	oxygen, err := strconv.ParseInt(string(candidatesForOxygen[0]), 2, 64)
+	result, err := strconv.ParseInt(string(candidates[0]), 2, 64)
 
 	if err != nil {
 		panic("OH NO")
 	}
 
-	c02, err := strconv.ParseInt(string(candidatesForC02[0]), 2, 64)
-
-	return oxygen * c02
+	return result
 }
