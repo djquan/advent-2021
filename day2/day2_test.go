@@ -18,16 +18,16 @@ func Test_part1(t *testing.T) {
 		{
 			name: "Simple",
 			args: args{
-				input: []string{
-					"forward 5",
-					"down 5",
-					"forward 8",
-					"up 3",
-					"down 8",
-					"forward 2",
-				},
+				input: simpleInput(),
 			},
 			want: 150,
+		},
+		{
+			name: "Larger",
+			args: args{
+				input: largerInput(),
+			},
+			want: 2070300,
 		},
 	}
 	for _, tt := range tests {
@@ -36,30 +36,6 @@ func Test_part1(t *testing.T) {
 				t.Errorf("part1() = %v, want %v", got, tt.want)
 			}
 		})
-	}
-}
-
-func TestWithLargerInput(t *testing.T) {
-	file, err := os.Open("input.txt")
-	if err != nil {
-		t.Fatalf("Oh no, the file failed to open: %v", err)
-	}
-	defer file.Close()
-
-	input := make([]string, 0)
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		input = append(input, scanner.Text())
-	}
-
-	result := part1(input)
-	if result != 2070300 {
-		t.Fatalf("Expected 1696, got %v", result)
-	}
-
-	result = part2(input)
-	if result != 2078985210 {
-		t.Fatalf("Expected 1696, got %v", result)
 	}
 }
 
@@ -75,16 +51,16 @@ func Test_part2(t *testing.T) {
 		{
 			name: "Simple",
 			args: args{
-				input: []string{
-					"forward 5",
-					"down 5",
-					"forward 8",
-					"up 3",
-					"down 8",
-					"forward 2",
-				},
+				input: simpleInput(),
 			},
 			want: 900,
+		},
+		{
+			name: "Larger",
+			args: args{
+				input: largerInput(),
+			},
+			want: 2078985210,
 		},
 	}
 	for _, tt := range tests {
@@ -94,4 +70,31 @@ func Test_part2(t *testing.T) {
 			}
 		})
 	}
+}
+
+func simpleInput() []string {
+	return []string{
+		"forward 5",
+		"down 5",
+		"forward 8",
+		"up 3",
+		"down 8",
+		"forward 2",
+	}
+}
+
+func largerInput() []string {
+	file, err := os.Open("input.txt")
+	if err != nil {
+		panic("oh no")
+	}
+	defer file.Close()
+
+	input := make([]string, 0)
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		input = append(input, scanner.Text())
+	}
+
+	return input
 }

@@ -18,22 +18,16 @@ func Test_part1(t *testing.T) {
 		{
 			name: "Simple",
 			args: args{
-				input: []string{
-					"00100",
-					"11110",
-					"10110",
-					"10111",
-					"10101",
-					"01111",
-					"00111",
-					"11100",
-					"10000",
-					"11001",
-					"00010",
-					"01010",
-				},
+				input: simpleInput(),
 			},
 			want: 198,
+		},
+		{
+			name: "Larger",
+			args: args{
+				input: largerInput(),
+			},
+			want: 2640986,
 		},
 	}
 	for _, tt := range tests {
@@ -42,29 +36,6 @@ func Test_part1(t *testing.T) {
 				t.Errorf("part1() = %v, want %v", got, tt.want)
 			}
 		})
-	}
-}
-
-func TestLargerInput(t *testing.T) {
-	file, err := os.Open("input.txt")
-	if err != nil {
-		t.Fatalf("Oh no, the file failed to open: %v", err)
-	}
-	defer file.Close()
-
-	input := make([]string, 0)
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		input = append(input, scanner.Text())
-	}
-
-	result := part1(input)
-	if result != 2640986 {
-		t.Fatalf("Expected 2640986, got %v", result)
-	}
-	result = part2(input)
-	if result != 6822109 {
-		t.Fatalf("Expected 6822109, got %v", result)
 	}
 }
 
@@ -80,22 +51,16 @@ func Test_part2(t *testing.T) {
 		{
 			name: "Simple",
 			args: args{
-				input: []string{
-					"00100",
-					"11110",
-					"10110",
-					"10111",
-					"10101",
-					"01111",
-					"00111",
-					"11100",
-					"10000",
-					"11001",
-					"00010",
-					"01010",
-				},
+				input: simpleInput(),
 			},
 			want: 230,
+		},
+		{
+			name: "Larger",
+			args: args{
+				input: largerInput(),
+			},
+			want: 6822109,
 		},
 	}
 	for _, tt := range tests {
@@ -105,4 +70,37 @@ func Test_part2(t *testing.T) {
 			}
 		})
 	}
+}
+
+func simpleInput() []string {
+	return []string{
+		"00100",
+		"11110",
+		"10110",
+		"10111",
+		"10101",
+		"01111",
+		"00111",
+		"11100",
+		"10000",
+		"11001",
+		"00010",
+		"01010",
+	}
+}
+
+func largerInput() []string {
+	file, err := os.Open("input.txt")
+	if err != nil {
+		panic("oh no")
+	}
+	defer file.Close()
+
+	input := make([]string, 0)
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		input = append(input, scanner.Text())
+	}
+
+	return input
 }

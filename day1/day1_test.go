@@ -19,18 +19,7 @@ func Test_part1(t *testing.T) {
 		{
 			name: "Simple test",
 			args: args{
-				depths: []int{
-					199,
-					200,
-					208,
-					210,
-					200,
-					207,
-					240,
-					269,
-					260,
-					263,
-				},
+				depths: simpleInput(),
 			},
 			want: 7,
 		},
@@ -41,6 +30,13 @@ func Test_part1(t *testing.T) {
 			},
 			want: 0,
 		},
+		{
+			name: "Larger input",
+			args: args{
+				depths: largerInput(),
+			},
+			want: 1696,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -48,36 +44,6 @@ func Test_part1(t *testing.T) {
 				t.Errorf("part1() = %v, want %v", got, tt.want)
 			}
 		})
-	}
-}
-
-func TestWithLargerInput(t *testing.T) {
-	file, err := os.Open("input.txt")
-	if err != nil {
-		t.Fatalf("Oh no, the file failed to open: %v", err)
-	}
-	defer file.Close()
-
-	input := make([]int, 0)
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		parsed, err := strconv.Atoi(scanner.Text())
-
-		if err != nil {
-			t.Fatalf("Oh on, the file contained non integers: %v", err)
-		}
-
-		input = append(input, parsed)
-	}
-
-	result := part1(input)
-	if result != 1696 {
-		t.Fatalf("Expected 1696, got %v", result)
-	}
-
-	result = part2(input)
-	if result != 1737 {
-		t.Fatalf("Expected 1696, got %v", result)
 	}
 }
 
@@ -93,20 +59,16 @@ func Test_part2(t *testing.T) {
 		{
 			name: "Simple",
 			args: args{
-				depths: []int{
-					199,
-					200,
-					208,
-					210,
-					200,
-					207,
-					240,
-					269,
-					260,
-					263,
-				},
+				depths: simpleInput(),
 			},
 			want: 5,
+		},
+		{
+			name: "Larger input",
+			args: args{
+				depths: largerInput(),
+			},
+			want: 1737,
 		},
 	}
 
@@ -117,4 +79,41 @@ func Test_part2(t *testing.T) {
 			}
 		})
 	}
+}
+
+func simpleInput() []int {
+	return []int{
+		199,
+		200,
+		208,
+		210,
+		200,
+		207,
+		240,
+		269,
+		260,
+		263,
+	}
+}
+
+func largerInput() []int {
+	file, err := os.Open("input.txt")
+	if err != nil {
+		panic("oh no")
+	}
+	defer file.Close()
+
+	input := make([]int, 0)
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		parsed, err := strconv.Atoi(scanner.Text())
+
+		if err != nil {
+			panic("oh no")
+		}
+
+		input = append(input, parsed)
+	}
+
+	return input
 }
