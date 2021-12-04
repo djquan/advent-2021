@@ -29,7 +29,7 @@ func part2(input [][][]int, instructions []int) int {
 
 	for _, instruction := range instructions {
 		for bi, board := range input {
-			if wonBoards[bi] == true {
+			if wonBoards[bi] {
 				continue
 			}
 
@@ -60,7 +60,7 @@ func sumOfUntracked(tracking [][]bool, board [][]int) int {
 
 	for ri, row := range tracking {
 		for ci, elem := range row {
-			if elem == false {
+			if !elem {
 				result += board[ri][ci]
 			}
 
@@ -73,11 +73,11 @@ func sumOfUntracked(tracking [][]bool, board [][]int) int {
 func won(tracking [][]bool, rowIndex int, columnIndex int) bool {
 	markedSameRow, markedSameColumn := 0, 0
 	for i := 0; i < 5; i++ {
-		if tracking[rowIndex][i] == true {
+		if tracking[rowIndex][i] {
 			markedSameRow++
 		}
 
-		if tracking[i][columnIndex] == true {
+		if tracking[i][columnIndex] {
 			markedSameColumn++
 		}
 	}
