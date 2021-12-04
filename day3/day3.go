@@ -33,6 +33,9 @@ func part1(input []string) int64 {
 	}
 
 	epsInt, err := strconv.ParseInt(string(eps), 2, 64)
+	if err != nil {
+		panic("OH NO")
+	}
 
 	return gammaInt * epsInt
 }

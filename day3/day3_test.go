@@ -1,8 +1,7 @@
 package day3
 
 import (
-	"bufio"
-	"os"
+	"advent2021"
 	"testing"
 )
 
@@ -90,17 +89,5 @@ func simpleInput() []string {
 }
 
 func largerInput() []string {
-	file, err := os.Open("input.txt")
-	if err != nil {
-		panic("oh no")
-	}
-	defer file.Close()
-
-	input := make([]string, 0)
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		input = append(input, scanner.Text())
-	}
-
-	return input
+	return advent2021.ReadLines("input.txt")
 }

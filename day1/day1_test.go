@@ -1,8 +1,7 @@
 package day1
 
 import (
-	"bufio"
-	"os"
+	"advent2021"
 	"strconv"
 	"testing"
 )
@@ -97,23 +96,17 @@ func simpleInput() []int {
 }
 
 func largerInput() []int {
-	file, err := os.Open("input.txt")
-	if err != nil {
-		panic("oh no")
-	}
-	defer file.Close()
+	input := advent2021.ReadLines("input.txt")
 
-	input := make([]int, 0)
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		parsed, err := strconv.Atoi(scanner.Text())
+	result := make([]int, 0)
 
+	for _, s := range input {
+		parsed, err := strconv.Atoi(s)
 		if err != nil {
 			panic("oh no")
 		}
+		result = append(result, parsed)
 
-		input = append(input, parsed)
 	}
-
-	return input
+	return result
 }
