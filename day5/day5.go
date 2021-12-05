@@ -88,7 +88,6 @@ func part2(input []lineSegment) int {
 					result++
 				}
 			}
-			continue
 		}
 
 		if segment.first.x == segment.second.x {
@@ -110,7 +109,6 @@ func part2(input []lineSegment) int {
 					result++
 				}
 			}
-			continue
 		}
 
 		diagonals := diagonalCoordinates(segment.first, segment.second)
