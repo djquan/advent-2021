@@ -2,8 +2,6 @@ package day6
 
 import (
 	"advent2021"
-	"strconv"
-	"strings"
 	"testing"
 )
 
@@ -80,19 +78,5 @@ func simpleInput() []int {
 }
 
 func largerInput() []int {
-	line := advent2021.ReadLines("input.txt")[0]
-
-	split := strings.Split(line, ",")
-
-	result := make([]int, len(split))
-
-	for i, s := range split {
-		x, err := strconv.Atoi(s)
-		if err != nil {
-			panic("oh no")
-		}
-
-		result[i] = x
-	}
-	return result
+	return advent2021.ReadIntLine("input.txt")
 }
